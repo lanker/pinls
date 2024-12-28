@@ -76,6 +76,7 @@ class BookmarkItem extends HTMLElement {
             if (!existingTags.includes(tag)) {
                 const s = new URLSearchParams(newUrl.search);
                 s.append("tags", tag);
+                s.delete("offset");
                 newUrl.search = s.toString();
             }
             eTag.href = newUrl.href;
@@ -87,6 +88,7 @@ class BookmarkItem extends HTMLElement {
         if (this._bookmark.unread) {
             const eTag = document.createElement("a");
             url.searchParams.set("unread", "yes");
+            url.searchParams.delete("offset");
             eTag.href = url.href;
             eTag.textContent = "unread";
             eTag.classList.add("bookmark-tag");

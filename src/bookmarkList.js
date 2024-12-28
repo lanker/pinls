@@ -8,11 +8,14 @@ class BookmarkList extends HTMLElement {
     async getBookmarks(query) {
         const url = new URL("http://localhost:3000/api/bookmarks");
 
-        if (query.has("unread")) {
-            const unread = query.get("unread");
-            if (unread) {
-                url.searchParams.append("unread", "yes");
-            }
+        const unread = query.get("unread");
+        if (unread) {
+            url.searchParams.append("unread", "yes");
+        }
+
+        const offset = query.get("offset");
+        if (offset) {
+            url.searchParams.append("offset", offset);
         }
 
         let q = "";

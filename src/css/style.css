@@ -114,3 +114,13 @@ li {
     color: var(--color-white-black);
     background-color: var(--color-orange);
 }
+
+.bookmark-pagination {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.bookmark-pagination a {
+    color: var(--color-orange);
+}

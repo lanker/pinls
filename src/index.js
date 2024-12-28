@@ -1,6 +1,7 @@
 import "./bookmarkList.js";
 import "./bookmarkItem.js";
 import "./filterPills.js";
+import "./pagination.js";
 
 /**
  * @typedef {Object} BookmarkResponse
