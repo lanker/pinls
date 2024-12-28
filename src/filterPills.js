@@ -3,8 +3,13 @@ class FilterPills extends HTMLElement {
         const shadow = this.attachShadow({ mode: "open" });
         const url = new URL(window.location.href);
         const query = url.searchParams;
+        let isFiltered = false;
 
-        const eTags = document.createElement("div");
+        const eContainer = document.createElement("div");
+        eContainer.style.display = "flex";
+        eContainer.style.gap = "1rem";
+
+        const eTags = document.createElement("span");
         for (const tagQuery of query.getAll("tags")) {
             const currentQuery = new URLSearchParams(url.search);
             // this is for handling tags separated with a ;, coming from the search form
@@ -21,6 +26,7 @@ class FilterPills extends HTMLElement {
                 if (!tag) {
                     continue;
                 }
+                isFiltered = true;
                 const eTag = document.createElement("a");
                 const queryForLink = new URLSearchParams(currentQuery);
                 queryForLink.delete("tags", tag);
@@ -48,6 +54,7 @@ class FilterPills extends HTMLElement {
         if (query.has("unread")) {
             const unread = query.get("unread");
             if (unread) {
+                isFiltered = true;
                 const eTag = document.createElement("a");
                 const s = new URLSearchParams(url.search);
                 s.delete("unread");
@@ -61,7 +68,14 @@ class FilterPills extends HTMLElement {
             }
         }
 
-        shadow.appendChild(eTags);
+        if (isFiltered) {
+            const eHeader = document.createElement("span");
+            eHeader.textContent = "Current filter:";
+            eContainer.appendChild(eHeader);
+        }
+
+        eContainer.appendChild(eTags);
+        shadow.appendChild(eContainer);
 
         const eStyle = document.createElement("link");
         eStyle.setAttribute("rel", "stylesheet");

@@ -59,7 +59,6 @@ class BookmarkList extends HTMLElement {
         const shadow = this.attachShadow({ mode: "open" });
         const query = new URL(document.location.toString()).searchParams;
 
-        // TODO: save and show current filter
         const bookmarks = await this.getBookmarks(query);
 
         const eList = document.createElement("ul");
