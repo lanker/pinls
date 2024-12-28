@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Pinfront</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/png" href="images/favicon.png" />
+        <link rel="stylesheet" href="css/style.css" />
+        <script defer src="./index.js" type="module"></script>
+    </head>
+    <body>
+        <div id="top-menu">
+            <a href="./add.html">Add bookmark</a>
+
+            <label>Color:
+                <select id="color-scheme">
+                    <option value="system" selected>🖥️</option>
+                    <option value="light">☀️</option>
+                    <option value="dark">🌙</option>
+                </select>
+            </label>
+        </div>
+
+        <div id="content">
+
+            <form id="query-form" style="margin-bottom: 0.5rem">
+                <label for="query-text">Search:</label>
+                <input id="query-text" type="search" name="query" list="query-list" size="50" />
+                <input type="hidden" id="query-tags" type="text" name="tags" />
+                <input type="hidden" id="query-unread" type="text" name="unread" />
+            </form>
+
+            <datalist id="query-list">
+            </datalist>
+
+            <div style="display: flex; gap: 1rem">
+                Current filter: <filter-pills ></filter-pills>
+            </div>
+            <bookmark-list ></bookmark-list>
+            <pagination></pagination>
+        </div>
+
+    </body>
+</html>

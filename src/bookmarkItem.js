@@ -1,0 +1,108 @@
+/** @import { BookmarkResponse } from "./index.js" */
+
+class BookmarkItem extends HTMLElement {
+    static observedAttributes = ["url", "title"];
+
+    /**
+     * @param {BookmarkResponse} bookmark
+     */
+    set bookmark(bookmark) {
+        this._bookmark = bookmark;
+    }
+
+    // /**
+    //  * @param {string} name
+    //  * @param {string} _oldValue
+    //  * @param {string} newValue
+    //  */
+    // attributeChangedCallback(name, _oldValue, newValue) {
+    //     switch (name) {
+    //         case "url":
+    //             this.url = newValue;
+    //             break;
+    //         case "title":
+    //             this.titlee = newValue;
+    //             break;
+    //     }
+    // }
+
+    disconnectedCallback() {
+        // this.textContent = "";
+    }
+
+    connectedCallback() {
+        if (!this._bookmark) {
+            return;
+        }
+
+        const shadow = this.attachShadow({ mode: "open" });
+
+        const eContainer = document.createElement("li");
+
+        const url = new URL(window.location.href);
+
+        const eAdded = document.createElement("span");
+        eAdded.textContent = new Date(Date.parse(this._bookmark.date_added)).toLocaleDateString();
+        eAdded.title = new Date(Date.parse(this._bookmark.date_added)).toISOString();
+        eAdded.classList.add("bookmark-added");
+        eContainer.appendChild(eAdded);
+
+        const eTitle = document.createElement("a");
+        eTitle.href = this._bookmark.url;
+        eTitle.textContent = this._bookmark.title;
+        eTitle.classList.add("bookmark-title");
+        if (this._bookmark.unread) {
+            eTitle.classList.add("bookmark-title-unread");
+        }
+        eContainer.appendChild(eTitle);
+
+        const eUrl = document.createElement("a");
+        eUrl.href = this._bookmark.url;
+        eUrl.textContent = this._bookmark.url;
+        eUrl.classList.add("bookmark-url");
+        eContainer.appendChild(eUrl);
+
+        const eDescription = document.createElement("div");
+        eDescription.textContent = this._bookmark.description;
+        eDescription.classList.add("bookmark-description");
+        eContainer.appendChild(eDescription);
+
+        const eTags = document.createElement("div");
+        eTags.classList.add("bookmark-tags");
+        for (const tag of this._bookmark.tag_names) {
+            const eTag = document.createElement("a");
+            const existingTags = url.searchParams.getAll("tags");
+            const newUrl = new URL(url);
+            if (!existingTags.includes(tag)) {
+                const s = new URLSearchParams(newUrl.search);
+                s.append("tags", tag);
+                newUrl.search = s.toString();
+            }
+            eTag.href = newUrl.href;
+            eTag.textContent = `#${tag}`;
+            eTag.classList.add("bookmark-tag");
+            eTags.appendChild(eTag);
+        }
+
+        if (this._bookmark.unread) {
+            const eTag = document.createElement("a");
+            url.searchParams.set("unread", "yes");
+            eTag.href = url.href;
+            eTag.textContent = "unread";
+            eTag.classList.add("bookmark-tag");
+            eTag.classList.add("bookmark-tag-unread");
+            eTags.appendChild(eTag);
+        }
+
+        eContainer.appendChild(eTags);
+
+        shadow.appendChild(eContainer);
+
+        const eStyle = document.createElement("link");
+        eStyle.setAttribute("rel", "stylesheet");
+        eStyle.setAttribute("href", "css/style.css");
+        shadow.appendChild(eStyle);
+    }
+}
+
+customElements.define("bookmark-item", BookmarkItem);

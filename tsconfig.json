@@ -1,0 +1,29 @@
+{
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "lib": ["dom", "es2022"],
+    "target": "es2022",
+
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "skipLibCheck": false,
+
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "removeComments": true,
+    "stripInternal": true,
+
+    "strict": true,
+
+    "exactOptionalPropertyTypes": false,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    "baseUrl": "./",
+  }
+}

@@ -1,0 +1,116 @@
+:root {
+    color-scheme: light dark;
+    --color-grey: light-dark(#333333, #cccccc);
+    --color-orange-dark: light-dark(#657882, #bb8223);
+    --color-orange: light-dark(#000000, #eb9203);
+    --color-tag: light-dark(#657882, #657882);
+    --color-bg: light-dark(#ffffff, #051822);
+    --color-black-white: light-dark(#000000, #ffffff);
+    --color-white-black: light-dark(#ffffff, #000000);
+}
+
+:root:has(select option[value="dark"]:checked) {
+    color-scheme: dark;
+}
+
+:root:has(select option[value="light"]:checked) {
+    color-scheme: light;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+body {
+    background: var(--color-bg);
+    font-family: sans-serif;
+    color: var(--color-grey);
+}
+
+#content {
+    max-width: 45rem;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 2rem;
+}
+
+#top-menu {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.bookmark-title {
+    display: block;
+    font-weight: bold;
+    color: var(--color-orange-dark);
+}
+
+.bookmark-title-unread {
+    color: var(--color-orange);
+}
+
+.bookmark-url {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-grey);
+}
+
+.bookmark-description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 50rem;
+    overflow: hidden
+}
+
+.bookmark-added {
+    font-size: 0.8rem;
+    color: var(--color-grey);
+}
+
+.bookmark-tags {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.bookmark-tag {
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+    background-color: var(--color-tag);
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.5rem;
+    color: var(--color-white-black);
+}
+
+.bookmark-tag:focus,
+.bookmark-tag:hover {
+    background-color: var(--color-grey);
+    text-decoration: none;
+}
+
+.bookmark-tag-unread:focus,
+.bookmark-tag-unread:hover {
+    background-color: var(--color-grey);
+}
+
+.bookmark-tag-unread {
+    color: var(--color-white-black);
+    background-color: var(--color-orange);
+}
