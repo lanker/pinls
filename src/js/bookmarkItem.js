@@ -101,10 +101,25 @@ class BookmarkItem extends HTMLElement {
         const eActions = document.createElement("div");
         eActions.classList.add("bookmark-actions");
 
+        const eView = document.createElement("button");
+        eView.type = "button";
+        eView.textContent = "View";
+        eView.onclick = () => {
+            const eViewer = document.createElement("bookmark-view");
+            // @ts-expect-error don't know how to make BookmarkItem the correct type
+            eViewer.bookmark = this._bookmark;
+            shadow.appendChild(eViewer);
+            console.log("CLICK");
+        };
+        eActions.appendChild(eView);
+
+        const eDivider = document.createElement("span");
+        eDivider.textContent = " | ";
+        eActions.appendChild(eDivider);
+
         const eEdit = document.createElement("a");
         eEdit.href = `add.html?id=${this._bookmark.id}`;
         eEdit.textContent = "Edit";
-        eEdit.classList.add("bookmark-edit-link");
         eActions.appendChild(eEdit);
 
         eContainer.appendChild(eActions);
