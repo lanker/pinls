@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Pinls: settings</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/png" href="images/favicon.png" />
+        <link rel="stylesheet" href="css/style.css" />
+        <script defer src="js/settings.js" type="module"></script>
+    </head>
+    <body>
+        <div id="content">
+            <div id="top-menu">
+                <a href="index.html"
+                   ><img
+                            src="logo.svg"
+                            width="30"
+                            style="border-radius: 50%; border: 2px solid #eb9203"
+                            />
+                </a>
+                    <span id="menu-right">
+                        <a href="./add.html">Add bookmark</a>
+                    </span>
+            </div>
+
+            <form class="settings-group" id="form-server">
+                <label for="server">Server</label>
+                <input type="url" id="server" name="server" size="50"></input>
+                <button type="submit">Save</button>
+            </form>
+
+            <form class="settings-group" id="form-token">
+                <label for="token">Token</label>
+                <input type="text" id="token" name="token" size="50"></input>
+                <button type="submit">Save</button>
+            </form>
+
+            <div class="settings-group">
+                <label for="color-scheme">Theme</label>
+                <select id="color-scheme">
+                    <option value="system">🖥️: system</option>
+                    <option value="light">☀️: light</option>
+                    <option value="dark">🌙: dark</option>
+                </select>
+            </div>
+
+            <a href="index.html">Done</a>
+        </div>
+    </body>
+</html>
+
