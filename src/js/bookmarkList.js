@@ -1,12 +1,24 @@
 /** @import { BookmarksResponse } from "./index.js" */
 
 class BookmarkList extends HTMLElement {
+    constructor() {
+        super();
+        this.server = localStorage.getItem("pinrs-server");
+        if (!this.server) {
+            window.location.href = "settings.html";
+        }
+        this.token = localStorage.getItem("pinrs-token");
+        if (!this.token) {
+            window.location.href = "settings.html";
+        }
+    }
+
     /**
      * @param {URLSearchParams} query
      * @returns {Promise<BookmarksResponse>}
      */
     async getBookmarks(query) {
-        const url = new URL("http://localhost:3000/api/bookmarks");
+        const url = new URL(`${this.server}/api/bookmarks`);
 
         const unread = query.get("unread");
         if (unread) {
@@ -48,7 +60,7 @@ class BookmarkList extends HTMLElement {
         const res = await fetch(url, {
             headers: {
                 "Content-type": "application/json",
-                Authorization: "Token abc123",
+                Authorization: `Token ${this.token}`,
             },
         });
         const content = await res.json();
@@ -64,7 +76,7 @@ class BookmarkList extends HTMLElement {
         const eList = document.createElement("ul");
         for (const bookmark of bookmarks.results) {
             const eListItem = document.createElement("bookmark-item");
-            // @ts-ignore don't know how to make BookmarkItem the correct type
+            // @ts-expect-error don't know how to make BookmarkItem the correct type
             eListItem.bookmark = bookmark;
             // const eListItem = document.createElement("li");
             // eListItem.innerHTML = `<a href=${bookmark.url}>${bookmark.title}</a>`;

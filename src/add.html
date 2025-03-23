@@ -2,18 +2,58 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Pinfront</title>
+        <title>Pinls: add bookmark</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" href="images/favicon.png" />
         <link rel="stylesheet" href="css/style.css" />
+        <script defer src="js/add.js" type="module"></script>
     </head>
     <body>
         <select id="color-scheme">
-            <option value="system" selected>System</option>
+            <option value="system" >System</option>
             <option value="light">Light</option>
-            <option value="dark">Dark</option>
+            <option value="dark" selected>Dark</option>
         </select>
-        <div id="content">HEJ</div>
+        <div id="content">
+            <form id="add-form" style="margin-bottom: 0.5rem">
+                <div class="add-input">
+                    <label for="add-url">URL:</label>
+                    <input id="add-url" type="url" name="add-url" size="60" />
+                </div>
+
+                <div class="add-input">
+                    <label for="add-title">Title:</label>
+                    <input id="add-title" type="text" name="add-title" size="60" />
+                </div>
+
+                <div class="add-input">
+                    <label for="add-description">Description:</label>
+                    <textarea id="add-description" type="textarea" name="add-description" /></textarea>
+                </div>
+
+                <div class="add-input">
+                    <label for="add-notes">Notes:</label>
+                    <textarea id="add-notes" type="textarea" name="add-notes" /></textarea>
+                </div>
+
+                <div class="add-input">
+                    <label for="add-tags">Tags:</label>
+                    <input id="add-tags" type="text" name="add-tags" size="60" list="tags-list" />
+                    <div id="selected-tags"></div>
+                </div>
+
+                <div class="add-input">
+                    <label for="add-unread">Unread:</label>
+                    <input id="add-unread" type="checkbox" name="add-unread" />
+                </div>
+
+                <datalist id="tags-list">
+                </datalist>
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+
     </body>
 </html>
 

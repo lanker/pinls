@@ -22,6 +22,28 @@ import "./pagination.js";
  * @property {BookmarkResponse[]} results
  */
 
+const server = localStorage.getItem("pinrs-server");
+if (!server) {
+    window.location.href = "settings.html";
+}
+
+const token = localStorage.getItem("pinrs-token");
+if (!token) {
+    window.location.href = "settings.html";
+}
+
+const theme = localStorage.getItem("pinrs-theme");
+if (theme) {
+    const eTheme = document.getElementById("color-scheme");
+    if (eTheme instanceof HTMLSelectElement) {
+        for (const eOption of Array.from(eTheme.options)) {
+            if (eOption.value === theme) {
+                eOption.selected = true;
+            }
+        }
+    }
+}
+
 const eForm = document.getElementById("query-form");
 if (eForm) {
     eForm.onsubmit = () => {
@@ -62,13 +84,13 @@ if (
             return;
         }
 
-        const url = new URL("http://localhost:3000/api/bookmarks");
+        const url = new URL(`${server}/api/bookmarks`);
         url.searchParams.set("q", value);
         url.searchParams.set("limit", "5");
         const res = await fetch(url, {
             headers: {
                 "Content-type": "application/json",
-                Authorization: "Token abc123",
+                Authorization: `Token ${token}`,
             },
         });
         /** @type {BookmarksResponse} */

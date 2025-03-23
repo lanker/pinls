@@ -1,42 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Pinfront</title>
+        <title>Pinls</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type="image/png" href="images/favicon.png" />
+        <link rel="icon" type="image/png" href="logo.svg" />
         <link rel="stylesheet" href="css/style.css" />
-        <script defer src="./index.js" type="module"></script>
+        <link rel="manifest" href="manifest.json" />
+        <script defer src="js/index.js" type="module"></script>
     </head>
     <body>
-        <div id="top-menu">
-            <a href="./add.html">Add bookmark</a>
-
-            <label>Color:
-                <select id="color-scheme">
-                    <option value="system" selected>🖥️</option>
-                    <option value="light">☀️</option>
-                    <option value="dark">🌙</option>
-                </select>
-            </label>
-        </div>
-
         <div id="content">
+            <div id="top-menu">
+                <a href="index.html"
+                   ><img
+                            src="logo.svg"
+                            width="30"
+                            style="border-radius: 50%; border: 2px solid #eb9203"
+                            />
+                </a>
+                    <span id="menu-right">
+                        <a href="./add.html">Add bookmark</a>
+                        <a href="./settings.html">Settings</a>
+                    </span>
+            </div>
 
             <form id="query-form" style="margin-bottom: 0.5rem">
-                <label for="query-text">Search:</label>
-                <input id="query-text" type="search" name="query" list="query-list" size="50" />
+                <label hidden for="query-text">Search:</label>
+                <input
+                        id="query-text"
+                        placeholder="Search"
+                        type="search"
+                        name="query"
+                        list="query-list"
+                        />
                 <input type="hidden" id="query-tags" type="text" name="tags" />
                 <input type="hidden" id="query-unread" type="text" name="unread" />
             </form>
 
-            <datalist id="query-list">
-            </datalist>
+            <datalist id="query-list"> </datalist>
 
-            <filter-pills ></filter-pills>
-            <bookmark-list ></bookmark-list>
+            <filter-pills></filter-pills>
+            <bookmark-list></bookmark-list>
             <bookmark-pagination></bookmark-pagination>
         </div>
 
+        <div style="display: none">
+            <label for="color-scheme">Theme</label>
+            <select id="color-scheme">
+                <option value="system">🖥️: system</option>
+                <option value="light">☀️: light</option>
+                <option value="dark">🌙: dark</option>
+            </select>
+        </div>
     </body>
 </html>
