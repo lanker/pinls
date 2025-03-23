@@ -9,38 +9,51 @@
         <script defer src="js/add.js" type="module"></script>
     </head>
     <body>
-        <select id="color-scheme">
+        <select style="display: none" id="color-scheme">
             <option value="system" >System</option>
             <option value="light">Light</option>
             <option value="dark" selected>Dark</option>
         </select>
         <div id="content">
+            <div id="top-menu">
+                <a href="index.html"
+                   ><img
+                            src="logo.svg"
+                            width="30"
+                            style="border-radius: 50%; border: 2px solid #eb9203"
+                            />
+                </a>
+                    <span id="menu-right">
+                        <a href="./index.html">Home</a>
+                        <a href="./settings.html">Settings</a>
+                    </span>
+            </div>
             <form id="add-form" style="margin-bottom: 0.5rem">
                 <div class="add-input">
-                    <label for="add-url">URL:</label>
-                    <input id="add-url" type="url" name="add-url" size="60" />
+                    <label hidden for="add-url">URL:</label>
+                    <input id="add-url" placeholder="URL" type="url" name="add-url" size="60" />
                 </div>
 
                 <div class="add-input">
-                    <label for="add-title">Title:</label>
-                    <input id="add-title" type="text" name="add-title" size="60" />
+                    <label hidden for="add-title">Title:</label>
+                    <input id="add-title" placeholder="Title" type="text" name="add-title" size="60" />
                 </div>
 
                 <div class="add-input">
-                    <label for="add-description">Description:</label>
-                    <textarea id="add-description" type="textarea" name="add-description" /></textarea>
+                    <label hidden for="add-description">Description:</label>
+                    <textarea id="add-description" placeholder="Description" type="textarea" name="add-description" /></textarea>
                 </div>
 
                 <div class="add-input">
-                    <label for="add-notes">Notes:</label>
-                    <textarea id="add-notes" type="textarea" name="add-notes" /></textarea>
+                    <label hidden for="add-notes">Notes:</label>
+                    <textarea id="add-notes" placeholder="Notes" type="textarea" name="add-notes" /></textarea>
                 </div>
 
                 <div class="add-input">
-                    <label for="add-tags">Tags:</label>
-                    <input id="add-tags" type="text" name="add-tags" size="60" list="tags-list" />
-                    <div id="selected-tags"></div>
+                    <label hidden for="add-tags">Tags:</label>
+                    <input id="add-tags" placeholder="Tags" type="text" name="add-tags" size="60" list="tags-list" />
                 </div>
+                <div id="selected-tags"></div>
 
                 <div class="add-input">
                     <label for="add-unread">Unread:</label>

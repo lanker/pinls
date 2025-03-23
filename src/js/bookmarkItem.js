@@ -98,6 +98,16 @@ class BookmarkItem extends HTMLElement {
 
         eContainer.appendChild(eTags);
 
+        const eActions = document.createElement("div");
+        eActions.classList.add("bookmark-actions");
+
+        const eEdit = document.createElement("a");
+        eEdit.href = `add.html?id=${this._bookmark.id}`;
+        eEdit.textContent = "Edit";
+        eEdit.classList.add("bookmark-edit-link");
+        eActions.appendChild(eEdit);
+
+        eContainer.appendChild(eActions);
         shadow.appendChild(eContainer);
 
         const eStyle = document.createElement("link");

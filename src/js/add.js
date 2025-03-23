@@ -31,6 +31,9 @@ if (!token) {
     window.location.href = "settings.html";
 }
 
+/** @type {BookmarkResponse["id"] | undefined} */
+let bookmarkToEdit;
+
 const tagsState = {
     /**
      * @type Set<string>
@@ -103,6 +106,47 @@ window.onload = async () => {
             eOption.value = tag.name;
             eTagsDataList.appendChild(eOption);
         }
+
+        // are we editing?
+        const id = new URL(window.location.href).searchParams.get("id");
+        if (id) {
+            const url = new URL(`${server}/api/bookmarks/${id}`);
+            const res = await fetch(url, {
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Token ${token}`,
+                },
+            });
+
+            /** @type {BookmarkResponse} */
+            const bookmark = await res.json();
+            bookmarkToEdit = bookmark.id;
+
+            const eUrlInput = eForm.elements.namedItem("add-url");
+            const eTitleInput = eForm.elements.namedItem("add-title");
+            const eDescriptionInput = eForm.elements.namedItem("add-description");
+            const eNotesInput = eForm.elements.namedItem("add-notes");
+            const eUnreadInput = eForm.elements.namedItem("add-unread");
+
+            if (
+                eUrlInput instanceof HTMLInputElement &&
+                eTitleInput instanceof HTMLInputElement &&
+                eDescriptionInput instanceof HTMLTextAreaElement &&
+                eNotesInput instanceof HTMLTextAreaElement &&
+                eUnreadInput instanceof HTMLInputElement
+            ) {
+                eUrlInput.value = bookmark.url;
+                eTitleInput.value = bookmark.title;
+                eDescriptionInput.value = bookmark.description;
+                eNotesInput.value = bookmark.notes;
+                eUnreadInput.checked = bookmark.unread;
+                for (const tag of bookmark.tag_names) {
+                    tagsState.selectedTags.add(tag);
+                }
+                // biome-ignore lint/correctness/noSelfAssign: we want to trigger the set function
+                tagsState.selectedTags = tagsState.selectedTags;
+            }
+        }
     }
 
     eForm.onsubmit =
@@ -116,14 +160,15 @@ window.onload = async () => {
             const eTitleInput = eForm.elements.namedItem("add-title");
             const eDescriptionInput = eForm.elements.namedItem("add-description");
             const eNotesInput = eForm.elements.namedItem("add-notes");
-            // const eTagsInput = eForm.elements.namedItem("add-tags");
+            const eUnreadInput = eForm.elements.namedItem("add-unread");
 
             if (
                 !(
                     eUrlInput instanceof HTMLInputElement &&
                     eTitleInput instanceof HTMLInputElement &&
                     eDescriptionInput instanceof HTMLTextAreaElement &&
-                    eNotesInput instanceof HTMLTextAreaElement
+                    eNotesInput instanceof HTMLTextAreaElement &&
+                    eUnreadInput instanceof HTMLInputElement
                 )
             ) {
                 console.error("Missing data");
@@ -136,17 +181,21 @@ window.onload = async () => {
                 title: eTitleInput.value,
                 description: eDescriptionInput.value,
                 notes: eNotesInput.value,
+                unread: eUnreadInput.checked,
+                tag_names: Array.from(tagsState.selectedTags),
             };
 
-            const url = new URL(`${server}/api/bookmarks`);
-            const res = await fetch(url, {
-                method: "POST",
+            const url = bookmarkToEdit
+                ? new URL(`${server}/api/bookmarks/${bookmarkToEdit}`)
+                : new URL(`${server}/api/bookmarks`);
+            await fetch(url, {
+                method: bookmarkToEdit ? "PUT" : "POST",
                 body: JSON.stringify(body),
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Token ${token}`,
                 },
             });
-            console.log(res);
+            window.location.href = "index.html";
         };
 };
