@@ -31,6 +31,18 @@ if (!token) {
     window.location.href = "settings.html";
 }
 
+const theme = localStorage.getItem("pinrs-theme");
+if (theme) {
+    const eTheme = document.getElementById("color-scheme");
+    if (eTheme instanceof HTMLSelectElement) {
+        for (const eOption of Array.from(eTheme.options)) {
+            if (eOption.value === theme) {
+                eOption.selected = true;
+            }
+        }
+    }
+}
+
 /** @type {BookmarkResponse["id"] | undefined} */
 let bookmarkToEdit;
 
