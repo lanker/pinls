@@ -57,13 +57,20 @@ class BookmarkList extends HTMLElement {
             url.searchParams.append("q", q);
         }
 
-        const res = await fetch(url, {
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Token ${this.token}`,
-            },
-        });
-        const content = await res.json();
+        /** @type BookmarksResponse */
+        let content = { count: 0, results: [] };
+
+        try {
+            const res = await fetch(url, {
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Token ${this.token}`,
+                },
+            });
+            content = await res.json();
+        } catch (err) {
+            console.error(err);
+        }
         return content;
     }
 
