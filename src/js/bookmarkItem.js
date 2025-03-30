@@ -10,22 +10,6 @@ class BookmarkItem extends HTMLElement {
         this._bookmark = bookmark;
     }
 
-    // /**
-    //  * @param {string} name
-    //  * @param {string} _oldValue
-    //  * @param {string} newValue
-    //  */
-    // attributeChangedCallback(name, _oldValue, newValue) {
-    //     switch (name) {
-    //         case "url":
-    //             this.url = newValue;
-    //             break;
-    //         case "title":
-    //             this.titlee = newValue;
-    //             break;
-    //     }
-    // }
-
     disconnectedCallback() {
         // this.textContent = "";
     }
