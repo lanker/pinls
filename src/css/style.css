@@ -178,13 +178,17 @@ dialog {
         background: none;
         border: none;
         padding: 0;
-        color: inherit;
+        color: var(--color-orange-dark);
         font: inherit;
         cursor: pointer;
     }
 
     button:hover {
         text-decoration: underline;
+    }
+
+    a {
+        color: var(--color-orange-dark);
     }
 }
 
