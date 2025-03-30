@@ -183,6 +183,7 @@ dialog {
     margin-bottom: 0.25rem;
 }
 
+.settings-group,
 #add-form {
     display: flex;
     flex-direction: column;
@@ -193,6 +194,7 @@ dialog {
         cursor: pointer;
     }
 
+    select,
     textarea,
     input {
         width: 100%;
@@ -220,6 +222,29 @@ dialog {
         font-size: 1.1rem;
         width: 8rem;
         padding: 0.3rem;
+    }
+
+    #test-server {
+        border: 1px solid #575fa2;
+        border-radius: 8px;
+        background: none;
+        font-size: 0.8rem;
+        align-self: end;
+
+        &.success {
+            border-color: #44dd66;
+
+            &:after {
+                content: " ✅";
+            }
+        }
+        &.failure {
+            border-color: #dd4466;
+
+            &:after {
+                content: " ❌";
+            }
+        }
     }
 }
 

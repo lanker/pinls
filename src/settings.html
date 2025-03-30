@@ -24,28 +24,30 @@
                     </span>
             </div>
 
-            <form class="settings-group" id="form-server">
-                <label for="server">Server</label>
-                <input type="url" id="server" name="server" size="50"></input>
+            <form class="settings-group" id="form-settings">
+                <div>
+                    <label for="server">Server:</label>
+                    <input type="url" id="server" name="server" size="50"></input>
+                </div>
+
+                <div>
+                    <label for="token">Token:</label>
+                    <input type="text" id="token" name="token" size="50"></input>
+                </div>
+
+                <button type="button" id="test-server" name="test-server">Test server</button>
+
+                <div>
+                    <label for="color-scheme">Theme:</label>
+                    <select id="color-scheme" name="theme">
+                        <option value="system">🖥️: system</option>
+                        <option value="light">☀️: light</option>
+                        <option value="dark">🌙: dark</option>
+                    </select>
+                </div>
+
                 <button type="submit">Save</button>
             </form>
-
-            <form class="settings-group" id="form-token">
-                <label for="token">Token</label>
-                <input type="text" id="token" name="token" size="50"></input>
-                <button type="submit">Save</button>
-            </form>
-
-            <div class="settings-group">
-                <label for="color-scheme">Theme</label>
-                <select id="color-scheme">
-                    <option value="system">🖥️: system</option>
-                    <option value="light">☀️: light</option>
-                    <option value="dark">🌙: dark</option>
-                </select>
-            </div>
-
-            <a href="index.html">Done</a>
         </div>
     </body>
 </html>

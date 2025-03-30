@@ -1,46 +1,90 @@
 window.onload = () => {
-    const eFormServer = document.getElementById("form-server");
-    if (eFormServer instanceof HTMLFormElement) {
-        const currentServer = localStorage.getItem("pinrs-server");
-        if (currentServer) {
-            const eInput = eFormServer.elements.namedItem("server");
-            if (eInput instanceof HTMLInputElement) {
-                eInput.value = currentServer;
-            }
+    const eFormSettings = document.getElementById("form-settings");
+    if (!(eFormSettings instanceof HTMLFormElement)) {
+        return;
+    }
+
+    eFormSettings.onsubmit = (event) => {
+        event.preventDefault();
+        if (!(event.target instanceof HTMLFormElement)) {
+            return;
         }
-        eFormServer.onsubmit = (event) => {
-            event.preventDefault();
-            if (!(event.target instanceof HTMLFormElement)) {
+        const eServer = event.target.elements.namedItem("server");
+        if (!(eServer instanceof HTMLInputElement)) {
+            return;
+        }
+        localStorage.setItem("pinrs-server", eServer.value);
+
+        const eToken = event.target.elements.namedItem("token");
+        if (!(eToken instanceof HTMLInputElement)) {
+            return;
+        }
+        localStorage.setItem("pinrs-token", eToken.value);
+
+        const eTheme = event.target.elements.namedItem("theme");
+        if (!(eTheme instanceof HTMLSelectElement)) {
+            return;
+        }
+        localStorage.setItem("pinrs-theme", eTheme.value);
+
+        window.location.href = "index.html";
+    };
+
+    const eTestServer = eFormSettings.elements.namedItem("test-server");
+    if (eTestServer instanceof HTMLButtonElement) {
+        eTestServer.onclick = async () => {
+            console.log("test");
+            const eServer = eFormSettings.elements.namedItem("server");
+            const eToken = eFormSettings.elements.namedItem("token");
+            if (!(eServer instanceof HTMLInputElement) || !(eToken instanceof HTMLInputElement)) {
                 return;
             }
-            const eInput = event.target.elements.namedItem("server");
-            if (!(eInput instanceof HTMLInputElement)) {
-                return;
+            eServer.onchange = () => {
+                eTestServer.classList.remove("success");
+                eTestServer.classList.remove("failure");
+            };
+            eToken.onchange = () => {
+                eTestServer.classList.remove("success");
+                eTestServer.classList.remove("failure");
+            };
+            const server = eServer.value;
+            const token = eToken.value;
+            const url = new URL(`${server}/api/bookmarks?limit=1`);
+            try {
+                const res = await fetch(url, {
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Token ${token}`,
+                    },
+                });
+                if (res.status === 200) {
+                    eTestServer.classList.add("success");
+                } else {
+                    eTestServer.classList.remove("success");
+                    eTestServer.classList.add("failure");
+                }
+            } catch (err) {
+                eTestServer.classList.remove("success");
+                eTestServer.classList.add("failure");
+                console.error(err);
             }
-            localStorage.setItem("pinrs-server", eInput.value);
         };
     }
 
-    const eFormToken = document.getElementById("form-token");
-    if (eFormToken instanceof HTMLFormElement) {
-        const currentToken = localStorage.getItem("pinrs-token");
-        if (currentToken) {
-            const eInput = eFormToken.elements.namedItem("token");
-            if (eInput instanceof HTMLInputElement) {
-                eInput.value = currentToken;
-            }
+    const currentServer = localStorage.getItem("pinrs-server");
+    if (currentServer) {
+        const eInput = eFormSettings.elements.namedItem("server");
+        if (eInput instanceof HTMLInputElement) {
+            eInput.value = currentServer;
         }
-        eFormToken.onsubmit = (event) => {
-            event.preventDefault();
-            if (!(event.target instanceof HTMLFormElement)) {
-                return;
-            }
-            const eInput = event.target.elements.namedItem("token");
-            if (!(eInput instanceof HTMLInputElement)) {
-                return;
-            }
-            localStorage.setItem("pinrs-token", eInput.value);
-        };
+    }
+
+    const currentToken = localStorage.getItem("pinrs-token");
+    if (currentToken) {
+        const eInput = eFormSettings.elements.namedItem("token");
+        if (eInput instanceof HTMLInputElement) {
+            eInput.value = currentToken;
+        }
     }
 
     const eTheme = document.getElementById("color-scheme");
@@ -53,13 +97,5 @@ window.onload = () => {
                 }
             }
         }
-
-        eTheme.onchange = (event) => {
-            if (!(event.target instanceof HTMLSelectElement)) {
-                return;
-            }
-
-            localStorage.setItem("pinrs-theme", event.target.value);
-        };
     }
 };
