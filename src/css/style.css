@@ -66,6 +66,30 @@ dialog {
     h2 {
         margin: 0;
     }
+
+    h3 {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .bookmark-tags {
+        margin-bottom: 2rem;
+    }
+
+    .bookmark-metadata-container {
+        margin-top: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .close-button {
+        margin-top: 2rem;
+        width: 8rem;
+        padding: 0.3rem;
+    }
+
+    &::backdrop {
+        background: rgba(0, 0, 0, 0.8);
+    }
 }
 
 #top-menu {
@@ -118,7 +142,7 @@ dialog {
 
 .bookmark-tags {
     font-size: 0.8rem;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     margin-bottom: 0.5rem;
 }
 
@@ -246,10 +270,4 @@ dialog {
             }
         }
     }
-}
-
-.bookmark-view-metadata-container {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-size: 0.8rem;
 }
