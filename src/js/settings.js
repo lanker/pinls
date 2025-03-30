@@ -49,7 +49,7 @@ window.onload = () => {
             };
             const server = eServer.value;
             const token = eToken.value;
-            const url = new URL(`${server}/api/bookmarks?limit=1`);
+            const url = new URL(`${server}/api/bookmarks/?limit=1`);
             try {
                 const res = await fetch(url, {
                     headers: {

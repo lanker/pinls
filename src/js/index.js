@@ -85,7 +85,7 @@ if (
             return;
         }
 
-        const url = new URL(`${server}/api/bookmarks`);
+        const url = new URL(`${server}/api/bookmarks/`);
         url.searchParams.set("q", value);
         url.searchParams.set("limit", "5");
         const res = await fetch(url, {

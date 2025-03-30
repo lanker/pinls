@@ -103,7 +103,7 @@ window.onload = async () => {
             eTagsInput.value = "";
         };
 
-        const url = new URL(`${server}/api/tags`);
+        const url = new URL(`${server}/api/tags/`);
         const res = await fetch(url, {
             headers: {
                 "Content-type": "application/json",
@@ -122,7 +122,7 @@ window.onload = async () => {
         // are we editing?
         const id = new URL(window.location.href).searchParams.get("id");
         if (id) {
-            const url = new URL(`${server}/api/bookmarks/${id}`);
+            const url = new URL(`${server}/api/bookmarks/${id}/`);
             const res = await fetch(url, {
                 headers: {
                     "Content-type": "application/json",
@@ -198,8 +198,8 @@ window.onload = async () => {
             };
 
             const url = bookmarkToEdit
-                ? new URL(`${server}/api/bookmarks/${bookmarkToEdit}`)
-                : new URL(`${server}/api/bookmarks`);
+                ? new URL(`${server}/api/bookmarks/${bookmarkToEdit}/`)
+                : new URL(`${server}/api/bookmarks/`);
             await fetch(url, {
                 method: bookmarkToEdit ? "PUT" : "POST",
                 body: JSON.stringify(body),

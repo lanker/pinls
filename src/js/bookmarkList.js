@@ -18,7 +18,7 @@ class BookmarkList extends HTMLElement {
      * @returns {Promise<BookmarksResponse>}
      */
     async getBookmarks(query) {
-        const url = new URL(`${this.server}/api/bookmarks`);
+        const url = new URL(`${this.server}/api/bookmarks/`);
 
         const unread = query.get("unread");
         if (unread) {
