@@ -59,11 +59,12 @@ class BookmarkItem extends HTMLElement {
         eView.type = "button";
         eView.textContent = "View";
         eView.onclick = () => {
-            const eViewer = document.createElement("bookmark-view");
-            // @ts-expect-error don't know how to make BookmarkItem the correct type
+            if (!this._bookmark) {
+                return;
+            }
+            const eViewer = /** @type {BookmarkView} */ (document.createElement("bookmark-view"));
             eViewer.bookmark = this._bookmark;
             shadow.appendChild(eViewer);
-            console.log("CLICK");
         };
         eActions.appendChild(eView);
 
