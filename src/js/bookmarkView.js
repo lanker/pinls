@@ -63,7 +63,9 @@ class BookmarkView extends HTMLElement {
             /** @import { TagPills } from "./tagPills.js" */
             const eTags = /** @type {TagPills} */ (document.createElement("tag-pills"));
             eTags.tags = this._bookmark.tag_names;
-            eTags.setAttribute("unread", "");
+            if (this._bookmark.unread) {
+                eTags.setAttribute("unread", "");
+            }
             eTags.style.display = "block";
             eTags.style.marginBottom = "2rem";
             eContainer.appendChild(eTags);
