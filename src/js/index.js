@@ -2,6 +2,7 @@ import "./bookmarkList.js";
 import "./bookmarkItem.js";
 import "./bookmarkView.js";
 import "./filterPills.js";
+import "./tagPills.js";
 import "./pagination.js";
 
 /**

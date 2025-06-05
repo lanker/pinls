@@ -54,42 +54,18 @@ class BookmarkView extends HTMLElement {
             eContainer.appendChild(eNotes);
         }
 
-        // tags (create component)
+        // tags
         if (this._bookmark.tag_names.length > 0 || this._bookmark.unread) {
             const eNotesTitle = document.createElement("h3");
             eNotesTitle.textContent = "Tags";
             eContainer.appendChild(eNotesTitle);
 
-            const url = new URL(window.location.href);
-            const eTags = document.createElement("div");
-            eTags.classList.add("bookmark-tags");
-            for (const tag of this._bookmark.tag_names) {
-                const eTag = document.createElement("a");
-                const existingTags = url.searchParams.getAll("tags");
-                const newUrl = new URL(url);
-                if (!existingTags.includes(tag)) {
-                    const s = new URLSearchParams(newUrl.search);
-                    s.append("tags", tag);
-                    s.delete("offset");
-                    newUrl.search = s.toString();
-                }
-                eTag.href = newUrl.href;
-                eTag.textContent = `#${tag}`;
-                eTag.classList.add("bookmark-tag");
-                eTags.appendChild(eTag);
-            }
-
-            if (this._bookmark.unread) {
-                const eTag = document.createElement("a");
-                url.searchParams.set("unread", "yes");
-                url.searchParams.delete("offset");
-                eTag.href = url.href;
-                eTag.textContent = "unread";
-                eTag.classList.add("bookmark-tag");
-                eTag.classList.add("bookmark-tag-unread");
-                eTags.appendChild(eTag);
-            }
-
+            /** @import { TagPills } from "./tagPills.js" */
+            const eTags = /** @type {TagPills} */ (document.createElement("tag-pills"));
+            eTags.tags = this._bookmark.tag_names;
+            eTags.setAttribute("unread", "");
+            eTags.style.display = "block";
+            eTags.style.marginBottom = "2rem";
             eContainer.appendChild(eTags);
         }
 
