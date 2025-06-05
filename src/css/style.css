@@ -37,7 +37,7 @@ a {
     text-decoration: none;
 }
 
-a:focus,
+a:focus-visible,
 a:hover {
     text-decoration: underline;
 }
@@ -150,13 +150,13 @@ dialog {
     color: var(--color-white-black);
 }
 
-.bookmark-tag:focus,
+.bookmark-tag:focus-visible,
 .bookmark-tag:hover {
     background-color: var(--color-grey);
     text-decoration: none;
 }
 
-.bookmark-tag-unread:focus,
+.bookmark-tag-unread:focus-visible,
 .bookmark-tag-unread:hover {
     background-color: var(--color-grey);
 }
