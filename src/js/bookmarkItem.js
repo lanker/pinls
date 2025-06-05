@@ -39,18 +39,39 @@ class BookmarkItem extends HTMLElement {
         eUrl.classList.add("bookmark-url");
         eContainer.appendChild(eUrl);
 
-        const eDescription = document.createElement("div");
-        eDescription.textContent = this._bookmark.description;
-        eDescription.classList.add("bookmark-description");
-        eContainer.appendChild(eDescription);
+        for (const item of [
+            { value: this._bookmark.description },
+            { header: "Notes", value: this._bookmark.notes },
+        ]) {
+            if (!item.value) {
+                continue;
+            }
+            const eWrapper = document.createElement("p");
 
-        /** @import { TagPills } from "./tagPills.js" */
-        const eTags = /** @type {TagPills} */ (document.createElement("tag-pills"));
-        eTags.tags = this._bookmark.tag_names;
-        if (this._bookmark.unread) {
-            eTags.setAttribute("unread", "");
+            if (item.header) {
+                const eHeader = document.createElement("div");
+                eHeader.classList.add("bookmark-description-header");
+                eHeader.textContent = item.header;
+                eWrapper.append(eHeader);
+            }
+
+            const eValue = document.createElement("div");
+            eValue.textContent = item.value;
+            eValue.title = item.value;
+            eValue.classList.add("bookmark-description");
+            eWrapper.append(eValue);
+            eContainer.appendChild(eWrapper);
         }
-        eContainer.appendChild(eTags);
+
+        if (this._bookmark.tag_names.length > 0) {
+            /** @import { TagPills } from "./tagPills.js" */
+            const eTags = /** @type {TagPills} */ (document.createElement("tag-pills"));
+            eTags.tags = this._bookmark.tag_names;
+            if (this._bookmark.unread) {
+                eTags.setAttribute("unread", "");
+            }
+            eContainer.appendChild(eTags);
+        }
 
         const eActions = document.createElement("div");
         eActions.classList.add("bookmark-actions");
