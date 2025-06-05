@@ -10,20 +10,13 @@ class BookmarkItem extends HTMLElement {
         this._bookmark = bookmark;
     }
 
-    disconnectedCallback() {
-        // this.textContent = "";
-    }
-
     connectedCallback() {
         if (!this._bookmark) {
             return;
         }
 
         const shadow = this.attachShadow({ mode: "open" });
-
         const eContainer = document.createElement("li");
-
-        const url = new URL(window.location.href);
 
         const eAdded = document.createElement("span");
         eAdded.textContent = new Date(Date.parse(this._bookmark.date_added)).toLocaleDateString();
@@ -51,35 +44,12 @@ class BookmarkItem extends HTMLElement {
         eDescription.classList.add("bookmark-description");
         eContainer.appendChild(eDescription);
 
-        const eTags = document.createElement("div");
-        eTags.classList.add("bookmark-tags");
-        for (const tag of this._bookmark.tag_names) {
-            const eTag = document.createElement("a");
-            const existingTags = url.searchParams.getAll("tags");
-            const newUrl = new URL(url);
-            if (!existingTags.includes(tag)) {
-                const s = new URLSearchParams(newUrl.search);
-                s.append("tags", tag);
-                s.delete("offset");
-                newUrl.search = s.toString();
-            }
-            eTag.href = newUrl.href;
-            eTag.textContent = `#${tag}`;
-            eTag.classList.add("bookmark-tag");
-            eTags.appendChild(eTag);
-        }
-
+        /** @import { TagPills } from "./tagPills.js" */
+        const eTags = /** @type {TagPills} */ (document.createElement("tag-pills"));
+        eTags.tags = this._bookmark.tag_names;
         if (this._bookmark.unread) {
-            const eTag = document.createElement("a");
-            url.searchParams.set("unread", "yes");
-            url.searchParams.delete("offset");
-            eTag.href = url.href;
-            eTag.textContent = "unread";
-            eTag.classList.add("bookmark-tag");
-            eTag.classList.add("bookmark-tag-unread");
-            eTags.appendChild(eTag);
+            eTags.setAttribute("unread", "");
         }
-
         eContainer.appendChild(eTags);
 
         const eActions = document.createElement("div");
