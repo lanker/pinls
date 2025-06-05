@@ -82,8 +82,7 @@ class BookmarkList extends HTMLElement {
 
         const eList = document.createElement("ul");
         for (const bookmark of bookmarks.results) {
-            const eListItem = document.createElement("bookmark-item");
-            // @ts-expect-error don't know how to make BookmarkItem the correct type
+            const eListItem = /** @type {BookmarkItem} */ (document.createElement("bookmark-item"));
             eListItem.bookmark = bookmark;
             eList.appendChild(eListItem);
         }
